@@ -2,8 +2,6 @@
 
 **Un arma forjada en la obstinación.** Genera CVs a partir de texto — rápido, sin suscripciones, 100% en tu navegador.
 
-[**→ Usar YaCV**](https://kirlts.github.io/yacv)
-
 ---
 
 ## ¿Qué es?
