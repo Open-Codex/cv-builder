@@ -57,3 +57,12 @@
 - **Alternativas Descartadas:** Deploy manual con `gh-pages` npm package (requiere token y ejecución local), Netlify/Vercel (innecesarios para un sitio estático ya hosteado en GitHub).
 - **Consecuencias:** Deploy fully automatizado. Requiere permisos de Pages en el repo y `actions/upload-pages-artifact` en el workflow.
 - **Condiciones de Reversión:** Alta — se puede volver a deploy manual eliminando el workflow. Sin efectos colaterales.
+
+### DEC-007 — LanguageSelector muestra idioma actual
+
+- **Fecha:** 2026-03-21
+- **Contexto:** El selector de idioma mostraba el idioma *destino* (ej: 🇪🇸ES cuando estabas en inglés). Esto confundía al usuario sobre el estado actual.
+- **Decisión:** Cambiar a mostrar el idioma *actual* (🇬🇧EN cuando estás en inglés, 🇪🇸ES cuando estás en español). El botón actúa como toggle.
+- **Alternativas Descartadas:** Mantener mostrar idioma destino (convención de algunas apps), doble botón con ambos idiomas siempre visibles (ocupa más espacio en toolbar).
+- **Consecuencias:** Más intuitivo para el usuario — el botón refleja el estado actual. Requiere ajustar tests que verificaban el texto del botón.
+- **Condiciones de Reversión:** Alta — cambio de 2 líneas en `LanguageSelector.tsx`.

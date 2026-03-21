@@ -2,8 +2,10 @@ import React from 'react';
 import { useTranslation } from '../i18n';
 
 /**
- * LanguageSelector — shows THE OTHER language + flag (the one you'll switch TO).
- * Per user requirement: if UI is in EN, show "🇪🇸 ES" (click to switch to Spanish).
+ * LanguageSelector — shows the CURRENT language + flag.
+ * Click to toggle to the other language.
+ * EN mode → shows "🇬🇧 EN", click to switch to Spanish.
+ * ES mode → shows "🇪🇸 ES", click to switch to English.
  */
 export const LanguageSelector: React.FC<{ onChange?: (newLang: string) => void }> = ({ onChange }) => {
   const { language, setLanguage } = useTranslation();
@@ -12,7 +14,6 @@ export const LanguageSelector: React.FC<{ onChange?: (newLang: string) => void }
     const newLang = language === 'en' ? 'es' : 'en';
     setLanguage(newLang);
     if (onChange) {
-      // themeLang expects 'english' or 'spanish'
       onChange(newLang === 'en' ? 'english' : 'spanish');
     }
   };
@@ -22,9 +23,10 @@ export const LanguageSelector: React.FC<{ onChange?: (newLang: string) => void }
       onClick={handleToggle}
       className="flex items-center gap-[5px] px-[8px] py-[5px] text-[12.5px] rounded bg-[#1e1e1e] hover:bg-[#404040] border border-[#404040] transition-colors whitespace-nowrap"
       title={language === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+      data-testid="language-toggle"
     >
-      <span className="text-[15px] leading-none">{language === 'en' ? '🇪🇸' : '🇬🇧'}</span>
-      <span className="font-medium text-gray-300">{language === 'en' ? 'ES' : 'EN'}</span>
+      <span className="text-[15px] leading-none">{language === 'en' ? '🇬🇧' : '🇪🇸'}</span>
+      <span className="font-medium text-gray-300" data-testid="language-label">{language === 'en' ? 'EN' : 'ES'}</span>
     </button>
   );
 };

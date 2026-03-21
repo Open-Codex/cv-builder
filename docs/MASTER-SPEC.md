@@ -58,6 +58,6 @@ Una **GitHub Page estática** compuesta por:
 ## 6. Preguntas Abiertas e Incertidumbre
 
 - **Fonts bundleadas:** Se identificaron fonts potencialmente no utilizadas (Fontin, XCharter, Nunito, IBM Plex Sans). Evaluación de reducción de bundle pendiente.
-- **E2E tests:** Existen tests Playwright pero no están configurados para CI.
+- **E2E tests en CI:** 45 tests Playwright (31 i18n + 14 toolbar-sync) existen y pasan localmente, pero no están integrados en el pipeline CI de GitHub Actions.
 - **Temas adicionales:** ¿Se agregarán más temas en V2? ¿Se soportarán temas custom?
 - **Mobile:** La experiencia mobile existe con tabs Editor/Preview, pero no está optimizada para edición prolongada.

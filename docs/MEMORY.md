@@ -37,3 +37,15 @@
 **Contexto:** Se enviaron 36 CVs únicos en un solo día. Todos compartían la misma base factual (Knowledge Base), pero variaban en keywords, elección de proyectos personales y énfasis técnico según la oferta. Sin mentiras — solo la comprensión del ecosistema.
 
 **Regla:** Automatizar la generación de CVs permite escalar esta estrategia. La herramienta debe optimizar para velocidad de iteración (debounce 200ms, templates precargadas, shortcuts de teclado) más que para perfección unitaria.
+
+### [HEU-005] pushEditOperations dispara onChange en Monaco
+
+**Patrón:** `model.pushEditOperations()` dispara el evento `onChange` de Monaco como si el usuario hubiera editado. Si se usa un flag para distinguir ediciones de usuario de actualizaciones externas (como `isUserEditRef`), las actualizaciones programáticas contaminan ese flag.
+
+**Contexto:** En `EditorPanel.tsx`, la sincronización externa usaba `pushEditOperations` (para preservar cursor y undo stack). Pero el `onChange` resultante marcaba `isUserEditRef = true`, causando que la *siguiente* actualización externa (ej: toggle de idioma, Reset, Demo CV) fuera ignorada — el sistema la interpretaba como "el usuario acaba de editar" y saltaba la sincronización.
+
+**Solución canónica:** Usar un segundo flag (`isProgrammaticRef`) que envuelve la llamada a `pushEditOperations`. En el handler de `onChange`, solo marcar `isUserEditRef = true` si `isProgrammaticRef` es `false`.
+
+**Fuente:** Descubierto mediante tests E2E Playwright que verificaban toggles consecutivos. [Confirmado por usuario - sin fuente externa]
+
+**Aplicabilidad:** Cualquier integración de Monaco que combine modo uncontrolled (`defaultValue`) con actualizaciones externas frecuentes y necesite un mecanismo para distinguir ediciones de usuario de actualizaciones programáticas.

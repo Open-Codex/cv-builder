@@ -14,6 +14,8 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ value, onChange }) => 
   const decorationsRef = useRef<any>(null);
   // Track whether the last value change came from user typing
   const isUserEditRef = useRef(false);
+  // Track whether a programmatic update is in progress (pushEditOperations triggers onChange)
+  const isProgrammaticRef = useRef(false);
 
   const updateErrorDecorations = useCallback((text: string) => {
     const editor = editorRef.current;
@@ -64,19 +66,25 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ value, onChange }) => 
     // Only push if the value actually differs from what Monaco has
     if (model.getValue() !== value) {
       // Use pushEditOperations to preserve undo stack and avoid cursor reset
+      // Mark as programmatic so the onChange fired by this push doesn't set isUserEditRef
+      isProgrammaticRef.current = true;
       const fullRange = model.getFullModelRange();
       model.pushEditOperations(
         [],
         [{ range: fullRange, text: value }],
         () => null
       );
+      isProgrammaticRef.current = false;
     }
     updateErrorDecorations(value);
   }, [value, updateErrorDecorations]);
 
   // Handler for user edits inside Monaco
   const handleChange = useCallback((newValue: string | undefined) => {
-    isUserEditRef.current = true;
+    // Only mark as user edit if this wasn't triggered by a programmatic update
+    if (!isProgrammaticRef.current) {
+      isUserEditRef.current = true;
+    }
     onChange(newValue);
   }, [onChange]);
 

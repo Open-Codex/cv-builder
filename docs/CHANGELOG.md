@@ -8,11 +8,25 @@
 ## [Unreleased]
 
 ### Added
+
 - GitHub Actions workflow para deploy automático a GitHub Pages.
 - Archivo `.nojekyll` para deshabilitar procesamiento Jekyll.
+- 31 tests E2E Playwright para cambio de idioma (`e2e/i18n.spec.ts`): UI sync, selector display, YAML keys, valores condicionales, edge cases.
+- 14 tests E2E Playwright para sync toolbar (`e2e/toolbar-sync.spec.ts`): Demo CV, Plantilla vacía, cambio de tema, operaciones combinadas.
+
+### Changed
+
+- `LanguageSelector` muestra el idioma **actual** (🇬🇧EN / 🇪🇸ES) en vez del idioma destino.
+- `handleThemeLangChange` usa `hintStateRef` en vez de capturar `hintState` en closure de `useCallback`.
+- `handleReset` y `handleLoadShowcase` marcan `isToolbarUpdateRef` para prevenir re-sync innecesario.
 
 ### Fixed
+
 - Fix `lib.typ` 404 en sitio desplegado: regla `*.typ` en `.gitignore` excluía archivos necesarios del paquete Typst.
+- **Fix crítico: toggle ES→EN no actualizaba el editor.** `pushEditOperations` disparaba `onChange` de Monaco que marcaba `isUserEditRef=true`, causando que la siguiente sincronización externa se ignorara. Corregido con guard `isProgrammaticRef` en `EditorPanel.tsx`.
+- **Fix: "Plantilla vacía" y "Demo CV" no actualizaban el editor.** Misma causa raíz que el toggle de idioma — corregido por el mismo `isProgrammaticRef`.
+- Fix inicialización dual de idioma: `I18nProvider` cambiado a inicialización síncrona para eliminar flicker.
+- Eliminado hook muerto `useLanguageDetection.ts`.
 
 ---
 

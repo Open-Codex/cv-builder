@@ -41,10 +41,16 @@ function getFileName(yamlContent: string, ext: 'pdf' | 'yaml'): string {
 const AppContent: React.FC = () => {
   const { t } = useTranslation();
 
-  // Detect browser language for initial state
-  const isBrowserEs = typeof navigator !== 'undefined' && navigator.language.startsWith('es');
-  const initialTemplate = isBrowserEs ? defaultShowcaseEs : defaultShowcase;
-  const initialLang = isBrowserEs ? 'spanish' : 'english';
+  // Resolve initial CV language in sync with UI language (same source of truth)
+  const resolvedUiLang = (() => {
+    try {
+      const saved = localStorage.getItem('rendercv-ui-lang');
+      if (saved === 'en' || saved === 'es') return saved;
+    } catch {}
+    return typeof navigator !== 'undefined' && navigator.language.startsWith('es') ? 'es' : 'en';
+  })();
+  const initialTemplate = resolvedUiLang === 'es' ? defaultShowcaseEs : defaultShowcase;
+  const initialLang = resolvedUiLang === 'es' ? 'spanish' : 'english';
 
   // State
   const [yamlContent, setYamlContent] = useLocalStorage<string>('rendercv-yaml', initialTemplate, 1000);
@@ -220,6 +226,10 @@ const AppContent: React.FC = () => {
     } catch {}
   }, [yamlContent, setYamlContent, setAccentColor]);
 
+  // hintState ref — always up-to-date, avoids stale closures in callbacks
+  const hintStateRef = useRef(hintState);
+  hintStateRef.current = hintState;
+
   // CV language change → translate YAML keys
   // MUST be synchronous — React 18 batches setThemeLang + setYamlContent into one render
   const yamlContentRef = useRef(yamlContent);
@@ -228,10 +238,17 @@ const AppContent: React.FC = () => {
   const handleThemeLangChange = useCallback((newLang: string) => {
     setThemeLang(newLang);
     try {
-      if (hintState === 'none' || hintState === 'minor') {
+      const currentHintState = hintStateRef.current;
+      if (currentHintState === 'none' || currentHintState === 'minor') {
         const fullTemplate = newLang === 'spanish' ? defaultShowcaseEs : defaultShowcase;
         isToolbarUpdateRef.current = true;
         setYamlContent(fullTemplate);
+        return;
+      }
+      if (currentHintState === 'reset') {
+        const skel = newLang === 'spanish' ? skeletonEs : skeleton;
+        isToolbarUpdateRef.current = true;
+        setYamlContent(skel);
         return;
       }
       const currentYaml = yamlContentRef.current;
@@ -243,7 +260,7 @@ const AppContent: React.FC = () => {
       isToolbarUpdateRef.current = true;
       setYamlContent(yaml.dump(translated, { lineWidth: -1 }));
     } catch {}
-  }, [setYamlContent, setThemeLang, hintState]);
+  }, [setYamlContent, setThemeLang]);
 
   // Font sizes → YAML
   const handleFontSizesChange = useCallback((newSizes: Record<string, string>) => {
@@ -336,15 +353,15 @@ const AppContent: React.FC = () => {
   }, [setYamlContent]);
 
   const handleReset = useCallback(() => {
-    const isEs = themeLang === 'spanish' || isBrowserEs;
-    setYamlContent(isEs ? skeletonEs : skeleton);
-  }, [setYamlContent, themeLang, isBrowserEs]);
+    isToolbarUpdateRef.current = true;
+    setYamlContent(themeLang === 'spanish' ? skeletonEs : skeleton);
+  }, [setYamlContent, themeLang]);
 
   const handleLoadShowcase = useCallback(() => {
-    const isEs = themeLang === 'spanish' || isBrowserEs;
-    setYamlContent(isEs ? defaultShowcaseEs : defaultShowcase);
+    isToolbarUpdateRef.current = true;
+    setYamlContent(themeLang === 'spanish' ? defaultShowcaseEs : defaultShowcase);
     setTheme('mart');
-  }, [setYamlContent, setTheme, themeLang, isBrowserEs]);
+  }, [setYamlContent, setTheme, themeLang]);
 
   const handleDownloadYaml = useCallback(() => {
     const blob = new Blob([yamlContent], { type: 'text/yaml' });

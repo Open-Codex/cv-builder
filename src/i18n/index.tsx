@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { en } from './en';
 import { es } from './es';
 
@@ -16,18 +16,17 @@ const dictionaries: Record<Language, Dictionary> = { en, es };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>('en');
+/** Resolve UI language synchronously: localStorage > browser language > 'en' */
+function resolveInitialLanguage(): Language {
+  try {
+    const saved = localStorage.getItem('rendercv-ui-lang');
+    if (saved === 'en' || saved === 'es') return saved;
+  } catch {}
+  return typeof navigator !== 'undefined' && navigator.language.startsWith('es') ? 'es' : 'en';
+}
 
-  useEffect(() => {
-    const saved = localStorage.getItem('rendercv-ui-lang') as Language;
-    if (saved && (saved === 'en' || saved === 'es')) {
-      setLanguageState(saved);
-    } else {
-      const browserLang = typeof navigator !== 'undefined' && navigator.language.startsWith('es') ? 'es' : 'en';
-      setLanguageState(browserLang);
-    }
-  }, []);
+export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<Language>(resolveInitialLanguage);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

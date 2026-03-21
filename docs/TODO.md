@@ -10,6 +10,9 @@
 
 ## 🔴 En Progreso
 
+- [/] `[EPIC-002]` CI/CD para standalone
+  - [/] `[TASK-004]` Integrar tests Playwright en CI (45 tests E2E disponibles)
+
 ---
 
 ## 🟡 Próximamente
@@ -62,3 +65,9 @@
   - [x] `[TASK-123]` Mensaje WASM con explicación breve — 2026-03-21 00:35:00
 - [x] `[EPIC-107]` Documentación V1.0.0 — 2026-03-21 01:22:00
   - [x] `[TASK-124]` Crear eje documental Kairós (MASTER-SPEC, TODO, CHANGELOG, MEMORY, USER-DECISIONS) — 2026-03-21 01:22:00
+- [x] `[EPIC-108]` Fix cambio de idioma y sync toolbar — 2026-03-21 14:19:00
+  - [x] `[TASK-126]` Fix `EditorPanel` — `pushEditOperations` disparaba `onChange` impidiendo sync externo (`isProgrammaticRef`) — 2026-03-21 13:52:00
+  - [x] `[TASK-127]` Fix `handleThemeLangChange` — stale closure de `hintState` reemplazada por `hintStateRef` — 2026-03-21 13:52:00
+  - [x] `[TASK-128]` UX: `LanguageSelector` muestra idioma actual (EN/ES) en vez del idioma destino — 2026-03-21 13:52:00
+  - [x] `[TASK-129]` 31 tests E2E Playwright para i18n (`e2e/i18n.spec.ts`) — 2026-03-21 14:05:00
+  - [x] `[TASK-130]` 14 tests E2E Playwright para sync toolbar (`e2e/toolbar-sync.spec.ts`) — 2026-03-21 14:15:00
