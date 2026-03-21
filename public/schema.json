@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RenderCV YAML Schema",
+  "description": "Schema for RenderCV YAML configuration files",
+  "type": "object",
+  "required": ["cv"],
+  "properties": {
+    "cv": {
+      "type": "object",
+      "description": "CV content and personal information",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "Full name" },
+        "headline": { "type": "string", "description": "Professional headline or tagline" },
+        "location": { "type": "string", "description": "City, Country" },
+        "email": { "type": "string", "format": "email", "description": "Email address" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "website": { "type": "string", "format": "uri", "description": "Personal website URL" },
+        "linkedin": { "type": "string", "description": "LinkedIn username (not full URL)" },
+        "github": { "type": "string", "description": "GitHub username (not full URL)" },
+        "sections": {
+          "type": "object",
+          "description": "CV sections (Experience, Education, Skills, etc.)",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "description": "Experience entry",
+                  "properties": {
+                    "company": { "type": "string" },
+                    "position": { "type": "string" },
+                    "location": { "type": "string" },
+                    "date": { "type": "string" },
+                    "highlights": { "type": "array", "items": { "type": "string" } }
+                  }
+                },
+                {
+                  "type": "object",
+                  "description": "Education entry",
+                  "properties": {
+                    "institution": { "type": "string" },
+                    "area": { "type": "string" },
+                    "location": { "type": "string" },
+                    "date": { "type": "string" },
+                    "summary": { "type": "string" },
+                    "highlights": { "type": "array", "items": { "type": "string" } }
+                  }
+                },
+                {
+                  "type": "object",
+                  "description": "Normal entry (project, publication, etc.)",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "detail": { "type": "string" },
+                    "date": { "type": "string" },
+                    "highlights": { "type": "array", "items": { "type": "string" } }
+                  }
+                },
+                {
+                  "type": "object",
+                  "description": "One-line entry (skill category)",
+                  "properties": {
+                    "label": { "type": "string" },
+                    "details": { "type": "string" }
+                  }
+                },
+                {
+                  "type": "string",
+                  "description": "Bullet point entry"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "locale": {
+      "type": "object",
+      "description": "Locale settings",
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": ["english", "spanish"],
+          "description": "CV language"
+        }
+      }
+    },
+    "design": {
+      "type": "object",
+      "description": "Design and theme settings",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["classic", "engineeringresumes", "sb2nov", "moderncv", "mart"],
+          "description": "Theme name"
+        },
+        "colors": {
+          "type": "object",
+          "description": "Color overrides",
+          "properties": {
+            "body": { "type": "string", "description": "Body text color (hex)" },
+            "name": { "type": "string", "description": "Name color (hex)" },
+            "headline": { "type": "string", "description": "Headline color (hex)" },
+            "connections": { "type": "string", "description": "Connections color (hex)" },
+            "section_titles": { "type": "string", "description": "Section titles color (hex)" },
+            "links": { "type": "string", "description": "Links color (hex)" },
+            "footer": { "type": "string", "description": "Footer color (hex)" },
+            "top_note": { "type": "string", "description": "Top note color (hex)" }
+          }
+        },
+        "typography": {
+          "type": "object",
+          "description": "Typography settings",
+          "properties": {
+            "font_family": {
+              "oneOf": [
+                { "type": "string", "description": "Font family for all elements" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "body": { "type": "string" },
+                    "name": { "type": "string" },
+                    "headline": { "type": "string" },
+                    "connections": { "type": "string" },
+                    "section_titles": { "type": "string" }
+                  }
+                }
+              ]
+            },
+            "font_size": {
+              "type": "object",
+              "properties": {
+                "body": { "type": "string" },
+                "name": { "type": "string" },
+                "headline": { "type": "string" },
+                "connections": { "type": "string" },
+                "section_titles": { "type": "string" }
+              }
+            },
+            "line_spacing": { "type": "string" },
+            "alignment": { "type": "string", "enum": ["justified", "left", "justified-with-no-hyphenation"] }
+          }
+        },
+        "page": {
+          "type": "object",
+          "properties": {
+            "size": { "type": "string", "enum": ["us-letter", "a4"] },
+            "top_margin": { "type": "string" },
+            "bottom_margin": { "type": "string" },
+            "left_margin": { "type": "string" },
+            "right_margin": { "type": "string" },
+            "show_footer": { "type": "boolean" },
+            "show_top_note": { "type": "boolean" }
+          }
+        },
+        "header": {
+          "type": "object",
+          "properties": {
+            "alignment": { "type": "string", "enum": ["left", "center", "right"] },
+            "space_below_name": { "type": "string" },
+            "space_below_headline": { "type": "string" },
+            "space_below_connections": { "type": "string" },
+            "connections": {
+              "type": "object",
+              "properties": {
+                "separator": { "type": "string" },
+                "space_between_connections": { "type": "string" }
+              }
+            }
+          }
+        },
+        "section_titles": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["with_full_line", "with_partial_line", "moderncv", "none"] },
+            "line_thickness": { "type": "string" },
+            "space_above": { "type": "string" },
+            "space_below": { "type": "string" }
+          }
+        },
+        "entries": {
+          "type": "object",
+          "properties": {
+            "date_and_location_width": { "type": "string" },
+            "side_space": { "type": "string" },
+            "highlights": {
+              "type": "object",
+              "properties": {
+                "bullet": { "type": "string" },
+                "space_above": { "type": "string" },
+                "space_between_items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "underline": { "type": "boolean" },
+            "show_external_link_icon": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  }
+}
