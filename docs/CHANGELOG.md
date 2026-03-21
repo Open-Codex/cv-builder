@@ -5,6 +5,17 @@
 >
 > **Contexto fundacional:** YaCV nació en 4 días de desarrollo, a partir de RenderCV (open source) y Typst WASM. Construido por un ingeniero recién titulado que se negó a que los filtros ATS y la burocracia de los CVs lo frenaran. Lo que empezó como necesidad personal — un CV distinto para cada postulación, 36 en un solo día — se convirtió en una herramienta pública para todos los que están en la misma trinchera.
 
+## [Unreleased]
+
+### Added
+- GitHub Actions workflow para deploy automático a GitHub Pages.
+- Archivo `.nojekyll` para deshabilitar procesamiento Jekyll.
+
+### Fixed
+- Fix `lib.typ` 404 en sitio desplegado: regla `*.typ` en `.gitignore` excluía archivos necesarios del paquete Typst.
+
+---
+
 ## [1.0.0] — 2026-03-21
 
 ### Added

@@ -18,7 +18,7 @@
   - [ ] `[TASK-001]` Auditar fonts bundleadas y eliminar no utilizadas (Fontin, XCharter, Nunito, IBM Plex Sans)
   - [ ] `[TASK-002]` Evaluar lazy loading del compilador WASM
 - [ ] `[EPIC-002]` CI/CD para standalone
-  - [ ] `[TASK-003]` Configurar GitHub Actions para build y deploy automático
+  - [x] `[TASK-003]` Configurar GitHub Actions para build y deploy automático — 2026-03-21 01:30:00
   - [ ] `[TASK-004]` Integrar tests Playwright en CI
 - [ ] `[EPIC-003]` Mejoras UX
   - [ ] `[TASK-005]` Optimizar experiencia mobile para edición prolongada
@@ -55,6 +55,7 @@
   - [x] `[TASK-118]` Limpieza de archivos temporales/debug — 2026-03-21 00:00:00
   - [x] `[TASK-119]` Creación de `.gitignore` standalone — 2026-03-21 00:00:00
   - [x] `[TASK-120]` Remoción de `vite-plugin-top-level-await` (innecesario) — 2026-03-21 00:00:00
+  - [x] `[TASK-125]` Fix `.gitignore` para incluir `lib.typ` en deploy (regla `*.typ` excluía paquetes Typst) — 2026-03-21 02:20:00
 - [x] `[EPIC-106]` Branding y UX copy — 2026-03-21 01:16:00
   - [x] `[TASK-121]` Branding "YaCV" en tagline, título, favicon (📄) — 2026-03-21 00:34:00
   - [x] `[TASK-122]` Botón "Descargar PDF" / "Download PDF" — 2026-03-21 00:19:00

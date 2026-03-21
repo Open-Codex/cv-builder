@@ -22,6 +22,7 @@ Una **GitHub Page estática** compuesta por:
 - **Registry de temas**: 5 temas (mart, classic, moderncv, engineeringclassic, engineeringresumes) con defaults de tipografía, colores, espaciado y plantillas de entries.
 - **Traductor de keys** `yamlKeyTranslator`: normaliza YAML con keys en español a formato inglés canónico.
 - **Persistencia localStorage**: YAML, tema, fuente, colores — todo persiste entre sesiones.
+- **Deploy automatizado:** GitHub Actions workflow que ejecuta build + deploy a GitHub Pages en cada push a `main`.
 
 ## 3. Requisitos de Usuario
 
