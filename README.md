@@ -8,14 +8,14 @@
 
 YaCV es un editor de CVs estático que convierte YAML en PDF profesional en tiempo real. Todo el procesamiento ocurre en tu dispositivo — ningún dato sale de tu navegador.
 
-Nació de la necesidad real de un ingeniero que se negó a dejar que los filtros ATS y la burocracia de los CVs frenaran su avance. 36 CVs únicos en un solo día. Sin mentiras. Solo la comprensión del ecosistema.
+Nació de la necesidad real de un ingeniero que se negó a dejar que los filtros ATS y la burocracia de los CVs frenaran su avance.
 
 ## Features
 
 - ✏️ **Editor YAML** con linter y validación en tiempo real (Monaco Editor)
 - 📄 **Renderizado PDF live** — ve los cambios al instante (debounce 200ms)
-- 🎨 **5 temas** de CV, todos compatibles con filtros ATS
-- 🔤 **Ajuste tipográfico** completo: fuente, tamaño, peso, espaciado, color de acento
+- 🎨 **2 temas** de CV, compatibles con filtros ATS
+- 🔤 **Ajuste tipográfico** completo: fuente, tamaño, espaciado, color de acento
 - 🌐 **Bilingüe** — interfaz y plantillas en español e inglés (ES/EN)
 - 🔒 **100% privado** — página estática, zero backend, zero tracking
 - 📥 **Descarga PDF y YAML** con un click
@@ -26,7 +26,7 @@ Nació de la necesidad real de un ingeniero que se negó a dejar que los filtros
 1. Abre [YaCV](https://kirlts.github.io/yacv)
 2. Haz clic en **Reset → Plantilla Vacía**
 3. Rellena la plantilla con tu información en el panel izquierdo
-4. Ajusta el estilo si quieres
+4. Ajusta el estilo
 5. **Descargar PDF**
 
 ## Stack
